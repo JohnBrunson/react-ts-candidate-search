@@ -10,8 +10,9 @@ No Installation required if you want to run the "production version" which is li
 ## Usage
 
 The application is divided into two sections:
-![Picture of the Candidate Search Page](src/assets/readme-images/candidate-search.png)
+
 ### Home page 
+![Picture of the Candidate Search Page](src/assets/readme-images/candidate-search.png)
 This will pull a list of 30 candidates for you to review. At the end of that 30 candidates, you can either refresh to pull a different, random 30 or you can review those that you have saved by choosing "Saved Candidates"
 
 ### Saved Candidates
