@@ -118,3 +118,8 @@ tbody tr:nth-child(odd) {
   width: 80vw;
   table-layout: fixed;
 }
+
+.table-container img {
+  width: 3vw; /* Dirty Hack? */
+  height: auto; /* Maintain aspect ratio */
+}
