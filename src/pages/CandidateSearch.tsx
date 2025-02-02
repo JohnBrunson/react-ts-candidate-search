@@ -8,19 +8,23 @@ const CandidateSearch = () => {
   const [currentCandidate, setCurrentCandidate] = useState<Candidate | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-
+  const [savedCandidates, setSavedCandidates] = useState<Candidate[]>(() => {
+    const saved = localStorage.getItem('savedCandidates');
+    return saved ? JSON.parse(saved) : [];
+  });
+  
   const fetchCandidate = async (username: string) => {
     setLoading(true);
     const user = await searchGithubUser(username);
     console.log('User data:', user);
     const candidateData: Candidate = {
-      Name: user.name,
-      Username: user.login,
-      Location: user.location,
-      Avatar: user.avatar_url,
-      Email: user.email,
-      Html_url: user.html_url,
-      Company: user.company,
+      Name: user.name || "No Name Provided",
+      Username: user.login ||"No userName Provided",
+      Location: user.location || "No Location Provided",
+      Avatar: user.avatar_url || "No Avatar Provided",
+      Email: user.email || "No Email Provided",
+      Html_url: user.html_url || "No URL Provided",
+      Company: user.company || "No Company Provided",
     };
     setCurrentCandidate(candidateData);
     setLoading(false);
@@ -30,14 +34,14 @@ const CandidateSearch = () => {
     const fetchCandidates = async () => {
       setLoading(true);
       const data = await searchGithub();
-      const transformedData = data.map((user: any) => ({
-        Name: user.name,
-        Username: user.login,
-        Location: user.location,
-        Avatar: user.avatar_url,
-        Email: user.email,
-        Html_url: user.html_url,
-        Company: user.company,
+      const transformedData = data.map((user: string) => ({
+        Name: user.name || "No Name Provided",
+        Username: user.login || "No Login Provided",
+        Location: user.location || "No Location Provided",
+        Avatar: user.avatar_url || "No Avatar Provided",
+        Email: user.email || "No Email Provided",
+        Html_url: user.html_url || "No URL Provided",
+        Company: user.company || "No Company Provided",
       }));
       setCandidates(transformedData);
       setLoading(false);
@@ -56,6 +60,26 @@ const CandidateSearch = () => {
     if (nextIndex < candidates.length) {
       setCurrentIndex(nextIndex);
       fetchCandidate(candidates[nextIndex].Username);
+    } else {
+      //display message indicating that there are no more candidates.
+    }
+  };
+
+  const addToSavedCandidates = () => {
+    if (currentCandidate && !savedCandidates.some(c => c.Username === currentCandidate.Username)) {
+      const updatedSavedCandidates = [...savedCandidates, currentCandidate];
+      setSavedCandidates(updatedSavedCandidates);
+      localStorage.setItem('savedCandidates', JSON.stringify(updatedSavedCandidates));
+      handleNextCandidate();
+    }
+  };
+
+  const removeFromStorage = (e: React.MouseEvent<SVGSVGElement, MouseEvent>, currentlyOnCandidateList: boolean | null | undefined, title: string | null) => {
+    if (currentCandidate) {
+      const updatedSavedCandidates = savedCandidates.filter(c => c.Username !== currentCandidate.Username);
+      setSavedCandidates(updatedSavedCandidates);
+      localStorage.setItem('savedCandidates', JSON.stringify(updatedSavedCandidates));
+      handleNextCandidate();
     }
   };
 
@@ -67,13 +91,18 @@ const CandidateSearch = () => {
       ) : (
         currentCandidate && (
           <div>
-            <CandidateCard currentCandidate={currentCandidate} />
-            <button onClick={handleNextCandidate}>Next Candidate</button>
+            <CandidateCard
+              currentCandidate={currentCandidate}
+              addToSavedCandidates={addToSavedCandidates}
+              onCandidateList={true}
+              removeFromStorage={removeFromStorage}
+            />
           </div>
         )
       )}
     </div>
   );
 };
+
 
 export default CandidateSearch;
