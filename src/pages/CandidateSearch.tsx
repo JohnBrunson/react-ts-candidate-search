@@ -12,6 +12,7 @@ const CandidateSearch = () => {
     const saved = localStorage.getItem('savedCandidates');
     return saved ? JSON.parse(saved) : [];
   });
+  const [noMoreCandidates, setNoMoreCandidates] = useState<boolean>(false);
   
   const fetchCandidate = async (username: string) => {
     setLoading(true);
@@ -62,6 +63,8 @@ const CandidateSearch = () => {
       fetchCandidate(candidates[nextIndex].Username);
     } else {
       //display message indicating that there are no more candidates.
+      setNoMoreCandidates(true);
+      setCurrentCandidate(null);
     }
   };
 
@@ -88,6 +91,8 @@ const CandidateSearch = () => {
       <h1>Candidate Search</h1>
       {loading ? (
         <p>Loading...</p>
+      ) : noMoreCandidates ? (
+      <p>No further candidates Available.</p>
       ) : (
         currentCandidate && (
           <div>

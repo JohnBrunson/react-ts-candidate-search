@@ -1,33 +1,27 @@
-# React + TypeScript + Vite
+# Candidate Selector  
+## Description
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is simply a random selector for candidates using React for the front end. The idea was simply to get better at React and how it interacts with typescript and how to get it to "play nice" with an API. The real world problem it could solve is that it allows an easy way for someone to search for candidates for positions.
 
-Currently, two official plugins are available:
+## Installation
 
-* [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md), which uses [Babel](https://babeljs.io/) for Fast Refresh
-* [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc), which uses [SWC](https://swc.rs/) for Fast Refresh
+No Installation required if you want to run the "production version" which is linked under the usage section. If, however, you'd like to run the local version, clone the repository and then type ```npm start```
 
-## Expanding the ESLint configuration
+## Usage
 
-If you're developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+The application is divided into two sections:
+![Picture of the Candidate Search Page](src/assets/readme-images/candidate-search.png)
+### Home page 
+This will pull a list of 30 candidates for you to review. At the end of that 30 candidates, you can either refresh to pull a different, random 30 or you can review those that you have saved by choosing "Saved Candidates"
 
-* Configure the top-level `parserOptions` property as follows:
+### Saved Candidates
+![Picture of the Candidate Search Page](src/assets/readme-images/potential-candidates.png)
+This will allow the user to review the candidates that they have selected. In a real-world sense, this would allow the user to narrow down further profiles. (They can be opened in a separate tab and cull the list further.)
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+## Credits
 
-* Replace `plugin:@typescript-eslint/recommended` with `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`.
-* Optionally, add `plugin:@typescript-eslint/stylistic-type-checked`.
-* Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` and `plugin:react/jsx-runtime` to the `extends` list.
+N/A
 
----
-© 2024 edX Boot Camps LLC. Confidential and Proprietary. All Rights Reserved.
+## License
+
+No License Provided
