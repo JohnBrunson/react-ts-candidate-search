@@ -13,7 +13,7 @@ const SavedCandidates = () => {
     }
   }, []);
 
-  const handleDelete = (username: string) => {
+  const handleDelete = (username: string | null) => {
     const updatedSavedCandidates = savedCandidates.filter(candidate => candidate.Username !== username);
     setSavedCandidates(updatedSavedCandidates);
     localStorage.setItem('savedCandidates', JSON.stringify(updatedSavedCandidates));
@@ -26,7 +26,7 @@ const SavedCandidates = () => {
         <table className="table-container">
           <thead>
             <tr>
-              <tr>Avatar</tr>
+              <th>Avatar</th>
               <th>Name</th>
               <th>Username</th>
               <th>Location</th>
@@ -38,15 +38,15 @@ const SavedCandidates = () => {
           </thead>
           <tbody>
             {savedCandidates.map((candidate) => (
-              <tr key={candidate.Username}>
-                <td><img src={candidate.Avatar}/></td>
+              <tr key={candidate.Username || candidate.Email || candidate.Html_url}>
+                <td><img src={candidate.Avatar || ''} alt={candidate.Username || 'Avatar'} /></td>
                 <td>{candidate.Name}</td>
                 <td>{candidate.Username}</td>
                 <td>{candidate.Location}</td>
                 <td>{candidate.Email}</td>
                 <td>{candidate.Company}</td>
                 <td>
-                  <a href={candidate.Html_url} target="_blank" rel="noopener noreferrer">
+                  <a href={candidate.Html_url || '#'} target="_blank" rel="noopener noreferrer">
                     View Profile
                   </a>
                 </td>
